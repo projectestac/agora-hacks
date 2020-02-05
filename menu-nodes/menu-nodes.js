@@ -1,6 +1,6 @@
 /*!
  *  File    : menu-nodes.js
- *  Version : 1.1.0
+ *  Version : 1.2.0
  *  Created : 04/02/2020
  *  By      : Francesc Busquets <fbusquets@xtec.cat>
  *
@@ -28,75 +28,12 @@
  *  @licend
  */
 
+/* global getComputedStyle  */
+
 (function () {
 
-  const scriptVersion = "1.1.0"
-  const scriptDate = "04/Feb/2020"
-
-  // Customized settings should be defined in a global object named "NODES_MENU_SETTINGS"
-  const defaultSettings = {
-    fontSize: '0.8em',
-    backgroundColor: 'white',
-    textTransform: 'uppercase',
-    menuSeparator: '2px solid #1fa799'
-  };
-
-  const settings = Object.assign({}, defaultSettings, window.NODES_MENU_SETTINGS);
-
-  // CSS attributes used to float/unfloat the submenus
-  const floatAttr = {
-    enabled: {
-      position: 'absolute',
-      'z-index': 100,
-      padding: '1rem',
-      border: '1px solid',
-      'background-color': settings.backgroundColor,
-      display: 'none',
-      'text-transform': 'none'
-    },
-    disabled: {
-      position: 'inherit',
-      'z-index': 'inherit',
-      padding: 'inherit',
-      border: 'inherit',
-      'background-color': 'inherit',
-      display: 'inherit'
-    },
-  };
-
-  const itemAttr = {
-    enabled: {
-      'margin-left': '1em',
-      'padding-right': '1em',
-      'padding-bottom': 0,
-      'margin-bottom': '10px',
-      'text-transform': settings.textTransform,
-      'border-right': settings.menuSeparator,
-      'font-size': settings.fontSize
-    },
-    disabled: {
-      'margin-left': 'inherit',
-      'padding-right': 'inherit',
-      'padding-bottom': 'inherit',
-      'margin-bottom': 0,
-      'text-transform': 'inherit',
-      'border-right': 'inherit',
-      'font-size': 'inherit'
-    },
-  };
-
-  const panelAttr = {
-    enabled: {
-      display: 'inline-block',
-      'padding-bottom': 0,
-      'padding-left': 0
-    },
-    disabled: {
-      display: 'none',
-      'padding-bottom': 'inherit',
-      'padding-left': 'inherit'
-    },
-  };
+  const scriptVersion = "1.2.0"
+  const scriptDate = "05/Feb/2020"
 
   // Track the currently displayed submenu (if any)
   let currentSubMenu = null;
@@ -107,45 +44,110 @@
   // Current main menu status
   let mainMenuTransformed = false;
 
+  // Set/unset CSS attributes to an HTML element
+  function setCSS(element, attributes, set = true) {
+    if (set)
+      Object.assign(element.style, attributes);
+    else
+      Object.keys(attributes).forEach(key => element.style[key] = '');
+  }
+
   // Enable or disable the main menu
   function transformMainMenu(enable) {
+
     // Avoid repetitive transforms
     if ((enable && mainMenuTransformed) || (!enable && !mainMenuTransformed))
       return;
-    // Find the main menu element
-    const mainMenu = document.querySelector('#menu-panel');
-    if (mainMenu) {
-      // Any click outside menu items hide submenu
-      if (enable)
-        mainMenu.addEventListener('click', hideSubMenu);
-      else
-        mainMenu.removeEventListener('click', hideSubMenu);
 
-      mainMenu.querySelectorAll('.main-menu-item').forEach((element, n, listObj) => {
-        // Add or remove event listeners
-        if (enable) {
-          element.addEventListener('touchstart', handleTouchStart);
-          element.addEventListener('mouseenter', handleMouseEnter);
-          element.addEventListener('click', handleMouseClick);
-        }
-        else {
-          element.removeEventListener('touchstart', handleTouchStart);
-          element.removeEventListener('mouseenter', handleMouseEnter);
-          element.removeEventListener('click', handleMouseClick);
-        }
-        // Set CSS attributes
-        Object.assign(element.style, itemAttr[enable ? 'enabled' : 'disabled']);
-        if (n === listObj.length - 1)
-          element.style['border-right'] = 'inherit';
-        // Float or unfloat the submenus
-        element.querySelectorAll('.sub-menu')
-          .forEach(submenu => Object.assign(submenu.style, floatAttr[enable ? 'enabled' : 'disabled']));
-      });
-      // Set CSS attributes to the main menu
-      Object.assign(mainMenu.style, panelAttr[enable ? 'enabled' : 'disabled']);
-      // Set the transformed flag
-      mainMenuTransformed = enable;
-    }
+    // Find the main menu panel (required!)
+    const mainMenu = document.querySelector('#menu-panel');
+    if (!mainMenu)
+      return;
+
+    // Find the first menu element (required!)
+    const firstMenuItem = mainMenu.querySelector('.main-menu-item');
+    if (!firstMenuItem)
+      return;
+
+    // Find the first link
+    const firstMenuLink = mainMenu.querySelector('.main-menu-link') || firstMenuItem;
+    const linkColor = getComputedStyle(firstMenuLink).color;
+
+    // Default settings
+    const defaultSettings = {
+      fontSize: '0.8em',
+      backgroundColor: getComputedStyle(mainMenu).backgroundColor,
+      textTransform: 'uppercase',
+      menuSeparator: `2px solid ${linkColor}`,
+      submenuBorder: `1px solid ${linkColor}`,
+      submenuTextTransform: 'none',
+    };
+
+    // Customized settings should be defined in a global object named "NODES_MENU_SETTINGS"
+    const settings = Object.assign({}, defaultSettings, window.NODES_MENU_SETTINGS);
+
+    // Floating submenus
+    const floatAttr = {
+      position: 'absolute',
+      'z-index': 100,
+      padding: '1rem',
+      border: settings.submenuBorder,
+      'background-color': settings.backgroundColor,
+      display: 'none',
+      'text-transform': settings.submenuTextTransform,
+    };
+
+    // Main menu items
+    const itemAttr = {
+      'margin-left': '1em',
+      'padding-right': '1em',
+      'padding-bottom': 0,
+      'margin-bottom': '10px',
+      'text-transform': settings.textTransform,
+      'border-right': settings.menuSeparator,
+      'font-size': settings.fontSize
+    };
+
+    // Main panel
+    const panelAttr = {
+      display: 'inline-block',
+      'padding-bottom': 0,
+      'padding-left': 0
+    };
+
+    // Any click outside menu items hide submenu
+    if (enable)
+      mainMenu.addEventListener('click', hideSubMenu);
+    else
+      mainMenu.removeEventListener('click', hideSubMenu);
+
+    mainMenu.querySelectorAll('.main-menu-item').forEach((element, n, listObj) => {
+      // Add or remove event listeners
+      if (enable) {
+        element.addEventListener('touchstart', handleTouchStart);
+        element.addEventListener('mouseenter', handleMouseEnter);
+        element.addEventListener('click', handleMouseClick);
+      }
+      else {
+        element.removeEventListener('touchstart', handleTouchStart);
+        element.removeEventListener('mouseenter', handleMouseEnter);
+        element.removeEventListener('click', handleMouseClick);
+      }
+      // Set CSS attributes
+      setCSS(element, itemAttr, enable);
+      // Remove last separator
+      if (n === listObj.length - 1)
+        element.style['border-right'] = 'inherit';
+      // Float or unfloat the submenus
+      element.querySelectorAll('.sub-menu')
+        .forEach(submenu => setCSS(submenu, floatAttr, enable));
+    });
+    // Set CSS attributes to the main menu
+    setCSS(mainMenu, panelAttr, enable);
+    if (!enable)
+      mainMenu.style.display = "none";
+    // Set the 'transformed' flag
+    mainMenuTransformed = enable;
   }
 
   // Hide current submenu and replace it by another one (when not null)
@@ -219,7 +221,6 @@
   console.log(`Loaded "menu-nodes.js" v${scriptVersion} (${scriptDate})`);
 
 })();
-
 
 // Actions to be performed at startup
 window.addEventListener('load', () => {
