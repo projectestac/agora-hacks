@@ -35,16 +35,17 @@ El codi font de l'script es troba disponible al repositori [Àgora-Hacks](https:
 ## Ús avançat
 Just davant de l'etiqueta "script" que carrega el codi podeu afegir-hi un altre script on es defineixi un objecte anomenat `NODES_MENU_SETTINGS`. Aquest objecte permet ajustar determinades variables de funcionament de l'script:
 
-|Paràmetre              |Descripció                                                    |Valor per defecte              |
-|-----------------------|--------------------------------------------------------------|-------------------------------|
-|`fontSize`             |Mida de la lletra als menús i submenús                        |`"0.8em"`                      |
-|`backgroundColor`      |Color de fons dels submenús                                   |Color de fons del Nodes        |
-|`textTransform`        |Mostra menús en majúscula (uppercase) o text normal (none)    |`"uppercase"`                  |
-|`menuSeparator`        |Estil de la barra vertical que separa els menús               |`"2px solid {color del menu}"` |
-|`submenuBorder`        |Estil del contorn dels submenús                               |`"1px solid {color del menu}"` |
-|`submenuTextTransform` |Mostra submenús en majúscula (uppercase) o text normal (none) |`"none"`                       |
+|Paràmetre              |Descripció                                                       |Valor per defecte              |
+|-----------------------|-----------------------------------------------------------------|-------------------------------|
+|`fontSize`             |Mida de la lletra als menús i submenús                           |`"0.8em"`                      |
+|`backgroundColor`      |Color de fons dels submenús                                      |Color de fons del Nodes        |
+|`textTransform`        |Mostra menús en majúscula (_uppercase_) o text normal (_none_)   |`"uppercase"`                  |
+|`menuSeparator`        |Estil de la barra vertical que separa els menús                  |`"2px solid {color del menu}"` |
+|`menuBorderBottom`     |Barra horitzontal sota el menú. Assigneu _none_ per eliminar-la  |`"2px solid {color del menu}"` |
+|`submenuBorder`        |Estil del contorn dels submenús                                  |`"1px solid {color del menu}"` |
+|`submenuTextTransform` |Mostra submenús en majúscula (_uppercase_) o text normal (_none_)|`"none"`                       |
 
-Per exemple, per fer que el menú aparegui amb lletra més gran, sense tot el text en majúscula i amb barres separadores de color blau, caldria posar aquest codi dins del giny HTML:
+Per exemple, per fer que el menú aparegui amb lletra més gran, sense convertir text a majúscula i amb barres separadores de color blau, caldria posar aquest codi dins del giny HTML:
 
 ```html
 <script>
@@ -59,4 +60,3 @@ NODES_MENU_SETTINGS = {
 ```
 
 __IMPORTANT__: Observeu que hi ha dos conjunts d'etiquetes "script", una per a la configuració especial i l'altra per cridar el codi.
-

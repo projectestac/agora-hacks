@@ -79,6 +79,7 @@
       backgroundColor: getComputedStyle(mainMenu).backgroundColor,
       textTransform: 'uppercase',
       menuSeparator: `2px solid ${linkColor}`,
+      menuBorderBottom: `2px solid ${linkColor}`,
       submenuBorder: `1px solid ${linkColor}`,
       submenuTextTransform: 'none',
     };
@@ -112,7 +113,8 @@
     const panelAttr = {
       display: 'inline-block',
       'padding-bottom': 0,
-      'padding-left': 0
+      'padding-left': 0,
+      'border-bottom': settings.menuBorderBottom,
     };
 
     // Any click outside menu items hide submenu
