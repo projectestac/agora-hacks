@@ -1,6 +1,6 @@
 /*!
  *  File    : menu-nodes.js
- *  Version : 1.2.0
+ *  Version : 1.2.1
  *  Created : 04/02/2020
  *  By      : Francesc Busquets <fbusquets@xtec.cat>
  *
@@ -46,10 +46,12 @@
 
   // Set/unset CSS attributes to an HTML element
   function setCSS(element, attributes, set = true) {
-    if (set)
-      Object.assign(element.style, attributes);
-    else
-      Object.keys(attributes).forEach(key => element.style[key] = '');
+    if (element && attributes) {
+      if (set)
+        Object.assign(element.style, attributes);
+      else
+        Object.keys(attributes).forEach(key => element.style[key] = '');
+    }
   }
 
   // Enable or disable the main menu
@@ -140,9 +142,8 @@
       // Remove last separator
       if (n === listObj.length - 1)
         element.style['border-right'] = 'inherit';
-      // Float or unfloat the submenus
-      element.querySelectorAll('.sub-menu')
-        .forEach(submenu => setCSS(submenu, floatAttr, enable));
+      // Float or unfloat the submenu, if any
+      setCSS(element.querySelector('.sub-menu'), floatAttr, enable);
     });
     // Set CSS attributes to the main menu
     setCSS(mainMenu, panelAttr, enable);
