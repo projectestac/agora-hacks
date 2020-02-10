@@ -32,8 +32,8 @@
 
 (function () {
 
-  const scriptVersion = "1.2.0"
-  const scriptDate = "05/Feb/2020"
+  const scriptVersion = "1.2.1"
+  const scriptDate = "10/Feb/2020"
 
   // Track the currently displayed submenu (if any)
   let currentSubMenu = null;
