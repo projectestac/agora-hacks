@@ -20,7 +20,7 @@ Per utilitzar-lo al vostre lloc Nodes cal seguir els passos següents:
 
 - Busqueu la caixa d'edició del giny (que haurà quedat més amunt) i copieu-hi aquest contingut:
 ```html
-<script src="https://clic.xtec.cat/dist/agora/menu-nodes.js"></script>
+<script src="https://agora.xtec.cat/portal/file.php?file=menu_nodes/menu-nodes.js"></script>
 ```
 
 - Deixeu el _Títol_ en blanc i feu clic a __Desa__
@@ -56,7 +56,7 @@ NODES_MENU_SETTINGS = {
   menuSeparator: "2px solid blue"
 }
 </script>
-<script src="https://clic.xtec.cat/dist/agora/menu-nodes.js"></script>
+<script src="https://agora.xtec.cat/portal/file.php?file=menu_nodes/menu-nodes.js"></script>
 ```
 
 __IMPORTANT__: Observeu que hi ha dos conjunts d'etiquetes "script", una per a la configuració especial i l'altra per cridar el codi.
