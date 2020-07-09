@@ -1,6 +1,5 @@
 # Menú Nodes
 
-
 Aquest script mostra el primer nivell del menú principal en els portals Nodes de centre, d'una manera similar
 a com es fa amb els de Serveis Educatius.
 

@@ -32,8 +32,8 @@
 
 (function () {
 
-  const scriptVersion = "1.2.1"
-  const scriptDate = "10/Feb/2020"
+  const scriptVersion = "1.3.0"
+  const scriptDate = "09/Jul/2020"
 
   // Track the currently displayed submenu (if any)
   let currentSubMenu = null;
@@ -120,10 +120,14 @@
     };
 
     // Any click outside menu items hide submenu
-    if (enable)
+    if (enable) {
       mainMenu.addEventListener('click', hideSubMenu);
-    else
+      mainMenu.addEventListener('mouseleave', hideSubMenu);
+    }
+    else {
       mainMenu.removeEventListener('click', hideSubMenu);
+      mainMenu.removeEventListener('mouseleave', hideSubMenu);
+    }
 
     mainMenu.querySelectorAll('.main-menu-item').forEach((element, n, listObj) => {
       // Add or remove event listeners
