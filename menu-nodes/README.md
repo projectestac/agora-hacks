@@ -55,7 +55,7 @@ NODES_MENU_SETTINGS = {
   menuSeparator: "2px solid blue"
 }
 </script>
-<script src="https://agora.xtec.cat/portal/file.php?file=menu_nodes/menu-nodes.js"></script>
+<script src="https://educaciodigital.cat/portal/menu-nodes.js"></script>
 ```
 
 __IMPORTANT__: Observeu que hi ha dos conjunts d'etiquetes "script", una per a la configuració especial i l'altra per cridar el codi.
