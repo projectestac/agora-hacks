@@ -19,7 +19,7 @@ Per utilitzar-lo al vostre lloc Nodes cal seguir els passos següents:
 
 - Busqueu la caixa d'edició del giny (que haurà quedat més amunt) i copieu-hi aquest contingut:
 ```html
-<script src="https://agora.xtec.cat/portal/file.php?file=menu_nodes/menu-nodes.js"></script>
+<script src="https://educaciodigital.cat/portal/menu-nodes.js"></script>
 ```
 
 - Deixeu el _Títol_ en blanc i feu clic a __Desa__
